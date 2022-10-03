@@ -45,7 +45,7 @@ let toggleCheck = () => {
 
             let div = this.parentNode;
             let children = div.childNodes;
-            console.log(div)
+
 
             if (!this.checked) {
                 children[3].style.textDecoration = "none";
@@ -56,7 +56,6 @@ let toggleCheck = () => {
                     metodo: "put",
                     body: {index: i, checked: false},
                     sucesso(resposta) {
-                        console.log(JSON.parse(resposta))
                     }
                 })
                 
@@ -69,7 +68,6 @@ let toggleCheck = () => {
                     metodo: "put",
                     body: {index: i, checked: true},
                     sucesso(resposta) {
-                        console.log(JSON.parse(resposta))
                     }
                 })
 
@@ -177,14 +175,12 @@ let renameTask = (event, input) => {
 
         for(let i = 0; i < size; i++) {
             if(tasks[i] == taskFather){
-                console.log("entrou")
                 body = {index: i, text: text};
                 ajax({
                     url: "rename",
                     metodo: "put",
                     body: body,
                     sucesso(resposta) {
-                        console.log(JSON.parse(resposta))
                     }
                 })
             }

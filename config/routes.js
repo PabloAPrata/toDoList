@@ -35,7 +35,6 @@ routes.delete('/:id', (req, res) => {
 
 routes.put('/rename', (req, res) => {
     const body = req.body
-    console.log(body.index)
     db[body.index].name = body.text
 
 
@@ -47,7 +46,6 @@ routes.put('/rename', (req, res) => {
 
 routes.put('/check', (req, res) => {
     const body = req.body
-    console.log(body.index)
     db[body.index].checked = body.checked
 
 
