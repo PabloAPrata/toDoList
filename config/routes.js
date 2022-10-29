@@ -1,59 +1,51 @@
-const express = require('express');
+const express = require("express");
 const routes = express.Router();
 
 let db = [
-    { name: 'Tomar o café da manhã', checked: true },
-    { name: 'Terminar o trabalho', checked: false },
-    { name: 'Aula de inglês', checked: false }
-]
+  { name: "Tomar o café da manhã", checked: true },
+  { name: "Terminar o trabalho", checked: false },
+  { name: "Aula de inglês", checked: false },
+];
 
-routes.get('/tasks', (req, res) => {
-    return res.json(db)
-})
+routes.get("/tasks", (req, res) => {
+  return res.json(db);
+});
 
-routes.post('/add-task', (req, res) => {
-    const body = req.body
+routes.post("/add-task", (req, res) => {
+  const body = req.body;
 
-    if (!body)
-        return res.status(400).end();
+  if (!body) return res.status(400).end();
+  
+  db.push(body);
+  return res.json(body);
+});
 
-    db.push(body)
-    return res.json(body);
-})
+routes.delete("/:id", (req, res) => {
+  const id = req.params.id;
+  const newDB = db.filter(function (elemento, index) {
+    if (index != id) return true;
+  });
 
-routes.delete('/:id', (req, res) => {
+  db = newDB;
+  return res.json(db);
+});
 
-    const id = req.params.id
-    const newDB = db.filter(function (elemento, index) {
-        if (index != id)
-            return true
-    })
+routes.put("/rename", (req, res) => {
+  const body = req.body;
+  db[body.index].name = body.text;
 
-    db = newDB
-    return res.json(db);
-})
+  if (!body) return res.status(400).end();
 
-routes.put('/rename', (req, res) => {
-    const body = req.body
-    db[body.index].name = body.text
+  return res.json(db);
+});
 
+routes.put("/check", (req, res) => {
+  const body = req.body;
+  db[body.index].checked = body.checked;
 
-    if (!body)
-        return res.status(400).end();
+  if (!body) return res.status(400).end();
 
-    return res.json(db);
-})
-
-routes.put('/check', (req, res) => {
-    const body = req.body
-    db[body.index].checked = body.checked
-
-
-    if (!body)
-        return res.status(400).end();
-
-    return res.json(db);
-})
-
+  return res.json(db);
+});
 
 module.exports = routes;
